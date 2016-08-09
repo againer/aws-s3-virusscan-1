@@ -1,7 +1,7 @@
 #!/usr/bin/env_ruby
 
 require 'digest'
-require 'uirusu'
+# require 'uirusu'
 require 'syslog/logger'
 require 'English'
 
