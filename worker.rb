@@ -33,7 +33,7 @@ poller.poll do |msg|
     asset = Asset.new(bucket, key, TEMP_FILE, log)
 
     # Set bucket and key for getting a bucket item.
-    asset.persist_local
+    next unless asset.persist_local?
 
     next if Scanner.new.virus?(bucket, key, TEMP_FILE, log)
     # Scan the asset.

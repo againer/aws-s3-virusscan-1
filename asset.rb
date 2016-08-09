@@ -15,14 +15,12 @@ class Asset
     @log = Syslog::Logger.new('s3-virusscan')
   end
 
-  def persist_local
-    @log.debug("persisting s3://#{@bucket}/#{@key} to #{@target}")
-    begin
-      @s3.get_object(response_target: @target, bucket: @bucket, key: @key)
-    rescue Aws::S3::Errors::NoSuchKey
-      @log.debug("s3://#{@bucket}/#{@key} no longer exists. Skipping...")
-      next
-    end
+  def persist_local?
+    @s3.get_object(response_target: @target, bucket: @bucket, key: @key)
+    true
+  rescue Aws::S3::Errors::NoSuchKey
+    @log.debug("s3://#{@bucket}/#{@key} no longer exists. Skipping...")
+    false
   end
 
   # Delete the asset in s3.
